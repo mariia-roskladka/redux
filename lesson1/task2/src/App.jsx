@@ -1,21 +1,18 @@
 import React from 'react';
-import Header from './Header';
-import { DataContext } from './userData-context.js';
+import Header from './Header.jsx';
+import { userData } from './userData-context';
 
 class App extends React.Component {
   state = {
-    userData: {
-      name: 'Nikola Tesla',
-      avatar_url: 'https://avatars3.githubusercontent.com/u10001',
-    },
+    userData: userData.teslaUser,
   };
 
+  // eslint-disable-next-line class-methods-use-this
   render() {
+    console.log(this.state);
     return (
       <div className="page">
-        <DataContext.Provider value={this.state.userData}>
-          <Header />
-        </DataContext.Provider>
+        <Header />
       </div>
     );
   }
