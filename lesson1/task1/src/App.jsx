@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import UserProfile from './UserProfile.jsx';
-import UserMenu from './UserMenu.jsx';
+import React, {Component} from 'react';
+import  ThemedButton from './ThemedButton';
+import { ThemeContext, themes } from './themes-context';
 
 class App extends React.Component {
-  state = {
-    userData: null,
-  };
-  componentDidMount() {
-    this.fetchUserData(this.props.userId);
-  }
-  fetchUserData = userId => {
-    const userUrl = `https://api.github.com/users/${userId}`;
-    fetch(userUrl)
-      .then(response => response.json())
-      .then(userData => this.setState({ userData }));
+  state={
+    theme:themes.dark,
   };
 
-  render() {
-    return (
-      <div className="page">
-        <header className="header">
-          <UserMenu userData={this.state.userData} />
-        </header>
-        <UserProfile userData={this.state.userData} />
+  toggleTheme=()=>{
+    const newTheme=this.state.theme===themes.dark
+      ? themes.light
+      : themes.dark;
+
+    this.setState({
+      theme:newTheme,
+    });
+  }
+  render(){
+    return(
+      <div>
+        <ThemeContext.Provider value={this.state.theme}>
+          <ThemedButton onClick={this.toggleTheme}>Dynamic Theme</ThemedButton>
+        </ThemeContext.Provider>
+          <ThemedButton onClick={this.toggleTheme}>Default Theme</ThemedButton>
       </div>
     );
   }
