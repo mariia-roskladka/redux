@@ -1,15 +1,11 @@
 import React from 'react';
-import UserMenu from './UserMenu.jsx';
+import UserMenu from './UserMenu';
 
-class Header extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
-  render() {
-    return (
-      <header className="header">
-        <UserMenu />
-      </header>
-    );
-  }
-}
-
+const Header = () => {
+  return (
+    <header className="header">
+      <UserMenu />
+    </header>
+  );
+};
 export default Header;
