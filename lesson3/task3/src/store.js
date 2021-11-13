@@ -1,47 +1,17 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import { userReducer } from './user.reducer';
+import { cartReducer } from './cart.reducer';
+import { languageReducer } from './language.reducer';
 
-const INCREMENT = 'COUNTER/INCREMENT';
-const DECREMENT = 'COUNTER/DECREMENT';
-const RESET = 'COUNTER/RESET';
-
-export const increment = () => ({
-    type: INCREMENT,
-});
-export const decrement = () => ({
-    type: DECREMENT,
-});
-export const reset = () => ({
-    type: RESET,
+const appReducer = combineReducers({
+    language: languageReducer,
+    cart: cartReducer,
+    user: userReducer,
 });
 
-const initialState = {
-    history: [],
-};
-
-const counterReducer = (state = initialState, action) => {
-    const { history } = state;
-
-    switch (action.type) {
-        case INCREMENT:
-            return {
-                ...state,
-                history: [...history, '+1'],
-            };
-        case DECREMENT:
-            return {
-                ...state,
-                history: history.concat(-1),
-            };
-        case RESET:
-            return {
-                ...state,
-                history: [],
-            };
-        default:
-            return state;
-    }
-};
-
-const store = createStore(counterReducer);
+const store = createStore(
+    appReducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 export default store;
