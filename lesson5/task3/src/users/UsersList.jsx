@@ -1,43 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import User from './User';
-import Pagination from './Pagination.jsx';
-import { goNext, goPrev } from '../user.actions';
+import React from "react";
+import Filter from "../Filter";
+import User from "./User";
+import { connect } from "react-redux";
+import { filteredUsersSelector } from "./users.selectors";
+import * as usersActions from "./users.actions";
 
-const ITEMS_PER_PAGE = 3;
-
-const UsersList = ({ users, goPrevPage, goNextPage, currentPage }) => {
-  const startIndex = currentPage * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const usersToRender = users.slice(startIndex, endIndex);
-
-  return (
-    <div>
-      <Pagination
-        goNext={goNextPage}
-        goPrev={goPrevPage}
-        currentPage={currentPage}
-        totalItems={users.length}
-        itemsPerPage={ITEMS_PER_PAGE}
-      />
-
-      <ul className="users">
-        {usersToRender.map(user => (
-          <User key={user.id} name={user.name} age={user.age} />
-        ))}
-      </ul>
-    </div>
-  );
+const UsersList = ({ usersList, setFilterText, filterText }) => {
+    return (
+        <div>
+            <Filter
+                filterText={filterText}
+                count={usersList.length}
+                onChange={setFilterText}
+            />
+            <ul className="users">
+                {usersList.map((user) => (
+                    <User key={user.id} {...user} />
+                ))}
+            </ul>
+        </div>
+    );
 };
-const mapState = state => ({ users: state.users.usersList, currentPage: state.users.currentPage });
+
+const mapState = (state) => {
+    return {
+        usersList: filteredUsersSelector(state),
+        filterText: state.users.filterText,
+    };
+};
 
 const mapDispatch = {
-  goNextPage: goNext,
-  goPrevPage: goPrev,
+    setFilterText: usersActions.setFilterText,
 };
 
-const connector = connect(mapState, mapDispatch);
-
-const ConnectedUsersList = connector(UsersList);
-
-export default ConnectedUsersList;
+export default connect(mapState, mapDispatch)(UsersList);
