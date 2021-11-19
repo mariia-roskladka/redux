@@ -1,5 +1,14 @@
-export const GO_PREV = 'USER/GO_PREV';
-export const GO_NEXT = 'USER/GO_NEXT';
+export const NEXT_PAGE = "USERS/NEXT_PAGE";
+export const PREV_PAGE = "USERS/PREV_PAGE";
 
-export const goPrev = () => ({ type: GO_PREV });
-export const goNext = () => ({ type: GO_NEXT });
+export const goNextPage = () => {
+    return {
+        type: NEXT_PAGE,
+    };
+};
+
+export const goPrevPage = () => {
+    return {
+        type: PREV_PAGE,
+    };
+};
