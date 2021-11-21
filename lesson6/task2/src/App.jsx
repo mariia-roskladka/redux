@@ -1,11 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import Users from './users/Users';
 import store from './store';
+import UserInfo from './users/UserInfo';
+import SearchField from './users/SearchField';
 
 const App = () => (
   <Provider store={store}>
-    <Users />
+    <div className="page">
+      <UserInfo />
+      <SearchField />
+    </div>
   </Provider>
 );
 

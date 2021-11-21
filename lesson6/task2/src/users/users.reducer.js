@@ -1,27 +1,19 @@
-import { ADD_USER, DELETE_USER } from './users.actions';
+import { SHOW_SPINNER, USER_DATA_RECEIVED } from './users.actions';
 
-const initialState = {
-    usersList: [],
+const initialData = {
+    isFetching: false,
+    userData: null,
 };
 
-const usersReducer = (state = initialState, action) => {
+const userReducer = (state = initialData, action) => {
     switch (action.type) {
-        case ADD_USER:
-            return {
-                ...state,
-                usersList: state.usersList.concat(action.payload.userData),
-            };
-        case DELETE_USER:
-            {
-                const newList = state.usersList.filter(user => user.id !== action.payload.userId);
-                return {
-                    ...state,
-                    usersList: newList,
-                };
-            }
+        case SHOW_SPINNER:
+            return {...state, isFetching: true };
+        case USER_DATA_RECEIVED:
+            return {...state, userData: action.payload.userData, isFetching: false };
         default:
             return state;
     }
 };
 
-export default usersReducer;
+export default userReducer;
